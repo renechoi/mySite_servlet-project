@@ -40,12 +40,12 @@ public class BoardFrontController extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String requestURI = request.getParameter("a");
+        System.out.println("requestURI = " + requestURI);
         Controller<BoardManager> boardController = controllerMap.get(requestURI);
         response.setContentType("text/html; charset=UTF-8");
         if (boardController == null) {
-            boardController = new BoardListController();
-//            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            return;
+            response.sendRedirect("");
+            return;
         }
 
         BoardManager boardManager = BoardManager.getInstance();

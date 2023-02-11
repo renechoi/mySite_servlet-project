@@ -29,6 +29,7 @@ public class GuestbookManager implements Manager {
         try {
             return GUESTBOOK_DAO.delete(guestbookVo);
         } catch (RuntimeException | SQLException e) {
+            System.out.println("e = " + e.getMessage());
             return new DaoResult("fail");
         }
     }

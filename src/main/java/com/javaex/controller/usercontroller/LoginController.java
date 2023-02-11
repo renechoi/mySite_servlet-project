@@ -17,7 +17,13 @@ public class LoginController implements Controller<UserManager> {
 
         UserVo userVo = fetchUserVo(userManager, request);
 
-        handleNotFound(response, userVo);
+        System.out.println("userVo = " + userVo);
+//        handleNotFound(response, userVo);
+
+        if (userVo == null) {
+            return new ModelView("/user/loginform");
+        }
+
 
         HttpSession session = request.getSession(true);
         session.setAttribute("authUser", userVo);

@@ -52,6 +52,7 @@ public class UserManager implements Manager{
         try {
             return USER_DAO.readBy("userEmailAndPassword", userVo);
         } catch (RuntimeException | SQLException e) {
+            System.out.println("e = " + e.getMessage());
             return new DaoResult("fail");
         }
     }

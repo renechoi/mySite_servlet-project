@@ -21,12 +21,6 @@ public class GuestbookAddController implements Controller<GuestbookManager> {
 
         guestbookManager.insert(guestbookVo);
 
-        try {
-            response.sendRedirect("/guestbook");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return new ModelView("/guestbook");
+        return new ModelView("redirect","/guestbook?a=list");
     }
 }

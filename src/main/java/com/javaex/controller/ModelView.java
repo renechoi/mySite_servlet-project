@@ -7,6 +7,7 @@ public class ModelView {
 
 
     private String viewName;
+    private Map<String, String> viewTypeAndName = new HashMap<>();
     private Map<String, Object> model = new HashMap<>();
 
 
@@ -17,6 +18,14 @@ public class ModelView {
 
     public ModelView(String viewName) {
         this.viewName = viewName;
+    }
+
+    public ModelView(String viewType, String viewName) {
+        viewTypeAndName.put(viewType, viewName);
+    }
+
+    public Map<String, String> getViewTypeAndName() {
+        return viewTypeAndName;
     }
 
     public String getViewName() {

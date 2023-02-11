@@ -18,7 +18,7 @@
 			<div id="content">
 				<div id="guestbook" class="delete-form">
 					
-					<form method="post" action="/guestbook">
+					<form method="post" action="/guestbook/list">
 						<input type="hidden" name="no" value="${param.no }">
 						<input type="hidden" name="a" value="delete">
 					
@@ -27,7 +27,7 @@
 						<input type="submit" value="확인">
 						
 					</form>
-					<a href="/gb">방명록 리스트</a>
+					<a href="/guestbook/list">방명록 리스트</a>
 					
 				</div>
 			</div><!-- /content -->

@@ -22,8 +22,8 @@ public class UserModifyController implements Controller<UserManager> {
         HttpSession session = request.getSession();
         UserVo authUser = (UserVo) session.getAttribute("authUser");
 
-        int no = authUser.getUserNumber();
-        userVo.setUserNumber(no);
+        int no = authUser.getNo();
+        userVo.setNo(no);
 
         userManager.update(userVo);
 

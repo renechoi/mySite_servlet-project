@@ -24,12 +24,6 @@ public class GuestbookMainController implements Controller<GuestbookManager> {
 
         request.setAttribute("list", guestbookVos);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/views/guestbook/list.jsp");
-        try {
-            requestDispatcher.forward(request,response);
-        } catch (ServletException | IOException e) {
-            throw new RuntimeException(e);
-        }
-        return new ModelView("list");
+        return new ModelView("forward","/guestbook/list");
     }
 }

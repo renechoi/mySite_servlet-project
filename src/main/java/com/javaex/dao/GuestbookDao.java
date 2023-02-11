@@ -69,6 +69,7 @@ public class GuestbookDao implements Dao<GuestbookVo> {
             preparedStatement.setString(2, guestbookVo.getPassword());
         });
 //        JDBC_TEMPLATE.close();
+        System.out.println("result = " + result);
         return new DaoResult(result);
     }
 }

@@ -13,7 +13,7 @@ public class UserDao implements Dao<UserVo> {
     private enum SqlQueries {
         INSERT("insert into users values (seq_users_no.nextval, ?, ?, ?, ?)"),
         READ_BY_USER_NO("select no, name, email, password, gender from users where no = ?"),
-        READ_BY_USER_EMAIL_AND_PASSWORD("select no, name from users where email = ? and password = ?"),
+        READ_BY_USER_EMAIL_AND_PASSWORD("select no, name, email, password, gender from users where email = ? and password = ?"),
         UPDATE_WITHOUT_PASSWORD("update users set name = ?, gender = ? where no = ?"),
         UPDATE_WITH_PASSWORD("update users set name = ?, password = ?, gender = ? where no = ?"),
         GET_COUNT_BY_EMAIL("select count(*) count from users  where email = ?"),
@@ -49,7 +49,7 @@ public class UserDao implements Dao<UserVo> {
 
     private DaoResult readByUserNumber(UserVo userVo) throws SQLException {
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_USER_NO.query, preparedStatement -> {
-            preparedStatement.setInt(1, userVo.getUserNumber());
+            preparedStatement.setInt(1, userVo.getNo());
         });
 
         boolean resultExist = resultSet.next();
@@ -64,10 +64,12 @@ public class UserDao implements Dao<UserVo> {
     }
 
     private DaoResult readByEmailAndPassword(UserVo userVo) throws SQLException {
+
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_USER_EMAIL_AND_PASSWORD.query, preparedStatement -> {
             preparedStatement.setString(1, userVo.getEmail());
             preparedStatement.setString(2, userVo.getPassword());
         });
+
 
         boolean resultExist = resultSet.next();
         DaoResult daoResult = new DaoResult("success");
@@ -88,7 +90,7 @@ public class UserDao implements Dao<UserVo> {
             int result = JDBC_TEMPLATE.executeUpdate(SqlQueries.UPDATE_WITHOUT_PASSWORD.query, preparedStatement -> {
                 preparedStatement.setString(1, userVo.getName());
                 preparedStatement.setString(2, userVo.getGender());
-                preparedStatement.setInt(3, userVo.getUserNumber());
+                preparedStatement.setInt(3, userVo.getNo());
             });
             return new DaoResult(result);
         }
@@ -97,7 +99,7 @@ public class UserDao implements Dao<UserVo> {
             preparedStatement.setString(1, userVo.getName());
             preparedStatement.setString(2, userVo.getPassword());
             preparedStatement.setString(3, userVo.getGender());
-            preparedStatement.setInt(4, userVo.getUserNumber());
+            preparedStatement.setInt(4, userVo.getNo());
         });
 //        JDBC_TEMPLATE.close();
         return new DaoResult(result);

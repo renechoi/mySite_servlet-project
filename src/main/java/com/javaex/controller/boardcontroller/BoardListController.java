@@ -17,6 +17,7 @@ public class BoardListController implements Controller<BoardManager> {
 
         List<BoardVo> boardVos = (List<BoardVo>) daoResult.getResultValue().get("BoardVos");
 
+        boardVos.forEach(v-> System.out.println("v = " + v));
         request.setAttribute("list", boardVos);
         return new ModelView("/board/list");
 

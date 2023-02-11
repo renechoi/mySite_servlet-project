@@ -19,7 +19,7 @@ public class BoardWriteController implements Controller<BoardManager> {
         BoardVo boardVo = new BoardVo(
                 request.getParameter("title"),
                 request.getParameter("content"),
-                authUser.getUserNumber());
+                authUser.getNo());
 
         boardManager.insert(boardVo);
         return new ModelView("/board/list");

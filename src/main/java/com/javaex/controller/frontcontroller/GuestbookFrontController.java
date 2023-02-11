@@ -30,7 +30,7 @@ public class GuestbookFrontController extends HttpServlet {
         controllerMap.put("add", new GuestbookAddController());
         controllerMap.put("deleteform", new GuestbookDeleteFormController());
         controllerMap.put("delete", new GuestbookDeleteController());
-        controllerMap.put("null", new GuestbookMainController());
+        controllerMap.put("list", new GuestbookMainController());
     }
 
     @Override
@@ -40,6 +40,7 @@ public class GuestbookFrontController extends HttpServlet {
         System.out.println("requestURI = " + requestURI);
         Controller<GuestbookManager> guestbookController = controllerMap.get(requestURI);
         response.setContentType("text/html; charset=UTF-8");
+
         if (guestbookController == null) {
 //            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             guestbookController = new GuestbookMainController();
@@ -50,11 +51,11 @@ public class GuestbookFrontController extends HttpServlet {
 
         ModelView guestbookModelView = guestbookController.process(guestbookManager, request, response);
 
-//        renderView(request, response, guestbookModelView);
+        renderView(request, response, guestbookModelView);
     }
 
-    private static void renderView(HttpServletRequest request, HttpServletResponse response, ModelView userModelView) throws ServletException, IOException {
-        MySiteView.of(userModelView.getViewName())
-                .render(userModelView.getModel(), request, response);
+    private static void renderView(HttpServletRequest request, HttpServletResponse response, ModelView guestbookModelView) throws ServletException, IOException {
+        MySiteView.of(guestbookModelView.getViewTypeAndName())
+                .render(guestbookModelView.getModel(), request, response);
     }
 }

@@ -20,6 +20,7 @@ public class BoardManager implements Manager {
         try {
             return BOARD_DAO.readBy(condition, boardVo);
         } catch (RuntimeException | SQLException e) {
+            System.out.println("e = " + e.getMessage());
             return new DaoResult("fail");
         }
     }

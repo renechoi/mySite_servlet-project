@@ -47,7 +47,7 @@ public class BoardDao implements Dao<BoardVo> {
 
     private DaoResult readByAll() throws SQLException {
         List<BoardVo> boardVos = new ArrayList<>();
-        ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_EACH.query);
+        ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_ALL.query);
 
         while (resultSet.next()) {
             BoardVo vo = new BoardVo(resultSet.getInt("no"),
