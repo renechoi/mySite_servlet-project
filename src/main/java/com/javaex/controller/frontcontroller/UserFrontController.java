@@ -55,7 +55,7 @@ public class UserFrontController extends HttpServlet {
     }
 
     private static void renderView(HttpServletRequest request, HttpServletResponse response, ModelView userModelView) throws ServletException, IOException {
-        MySiteView.of(userModelView.getViewName())
+        MySiteView.of(userModelView.getViewTypeAndName())
                 .render(userModelView.getModel(), request, response);
     }
 

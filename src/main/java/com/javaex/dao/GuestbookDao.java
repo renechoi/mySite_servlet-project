@@ -3,6 +3,7 @@ package com.javaex.dao;
 import com.javaex.jdbc.JdbcTemplate;
 import com.javaex.vo.GuestbookVo;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class GuestbookDao implements Dao<GuestbookVo> {
     }
 
     @Override
-    public DaoResult insert(GuestbookVo guestbookVo) throws SQLException {
+    public DaoResult insert(GuestbookVo guestbookVo) throws SQLException, IOException {
         int result = JDBC_TEMPLATE.executeInsert(SqlQueries.INSERT.query, preparedStatement -> {
             preparedStatement.setString(1, guestbookVo.getName());
             preparedStatement.setString(2, guestbookVo.getPassword());
@@ -36,7 +37,7 @@ public class GuestbookDao implements Dao<GuestbookVo> {
     }
 
     @Override
-    public DaoResult readBy(String condition, GuestbookVo guestbookVo) throws SQLException {
+    public DaoResult readBy(ReadCondition condition, GuestbookVo guestbookVo) throws SQLException {
         List<GuestbookVo> guestbookVos = new ArrayList<>();
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_ALL.query);
 
@@ -63,7 +64,7 @@ public class GuestbookDao implements Dao<GuestbookVo> {
     }
 
     @Override
-    public DaoResult delete(GuestbookVo guestbookVo) throws SQLException {
+    public DaoResult delete(GuestbookVo guestbookVo) throws SQLException, IOException {
         int result = JDBC_TEMPLATE.executeUpdate(SqlQueries.DELETE.query, preparedStatement -> {
             preparedStatement.setInt(1, guestbookVo.getNo());
             preparedStatement.setString(2, guestbookVo.getPassword());

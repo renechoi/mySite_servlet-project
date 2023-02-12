@@ -3,6 +3,7 @@ package com.javaex.controller.guestbookcontroller;
 import com.javaex.controller.Controller;
 import com.javaex.controller.ModelView;
 import com.javaex.dao.DaoResult;
+import com.javaex.dao.ReadCondition;
 import com.javaex.manager.GuestbookManager;
 import com.javaex.vo.GuestbookVo;
 
@@ -17,7 +18,7 @@ public class GuestbookMainController implements Controller<GuestbookManager> {
     @Override
     public ModelView process(GuestbookManager guestbookManager, HttpServletRequest request, HttpServletResponse response) {
 
-        DaoResult daoResult = guestbookManager.readByAll("All", null);
+        DaoResult daoResult = guestbookManager.readByAll(new ReadCondition("all"), null);
         List<GuestbookVo> guestbookVos = (List<GuestbookVo>) daoResult.getResultValue().get("GuestbookVos");
 
 //        guestbookVos.stream().forEach(guestbookVo -> System.out.println("guestbookVo = " + guestbookVo));

@@ -16,11 +16,12 @@ public class BoardModifyController implements Controller<BoardManager> {
         BoardVo boardVo = new BoardVo(
                 request.getParameter("title"),
                 request.getParameter("content"),
-                Integer.parseInt(request.getParameter("no")));
+                Integer.parseInt(request.getParameter("no")),
+                null);
 
 
         DaoResult daoResult = boardManager.update(boardVo);
 
-        return new ModelView("/board/list");
+        return new ModelView("forward","/board/list");
     }
 }

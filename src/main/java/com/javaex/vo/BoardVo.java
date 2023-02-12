@@ -1,5 +1,7 @@
 package com.javaex.vo;
 
+import javax.servlet.http.Part;
+
 public class BoardVo {
 
 	private int no;
@@ -9,6 +11,7 @@ public class BoardVo {
 	private String regDate;
 	private int userNo;
 	private String userName;
+	private Part file;
 
 	public BoardVo() {
 	}
@@ -21,17 +24,13 @@ public class BoardVo {
 		this(no, title, content, 0, "none", 0, "none");
 	}
 
-	public BoardVo(String title, String content, int userNo) {
-		this(0, title, content, 0, "none", userNo, "none");
+	public BoardVo(String title, String content, int userNo, Part file) {
+		this(0, title, content, 0, "none", userNo, "none", file);
 	}
 
 	public BoardVo(int no, String title, int hit, String regDate, int userNo, String userName) {
-		this.no = no;
-		this.title = title;
-		this.hit = hit;
-		this.regDate = regDate;
-		this.userNo = userNo;
-		this.userName = userName;
+		this(no, title, "none", hit, regDate, userNo, userName, null);
+
 	}
 
 	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo, String userName) {
@@ -39,7 +38,16 @@ public class BoardVo {
 		this.content = content;
 	}
 
-
+	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo, String userName, Part file) {
+		this.no = no;
+		this.title = title;
+		this.content = content;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.userNo = userNo;
+		this.userName = userName;
+		this.file = file;
+	}
 
 	public int getNo() {
 		return no;
@@ -95,6 +103,10 @@ public class BoardVo {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Part getFile() {
+		return file;
 	}
 
 	@Override

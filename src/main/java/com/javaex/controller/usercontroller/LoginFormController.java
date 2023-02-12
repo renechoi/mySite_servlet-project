@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginFormController implements Controller<UserManager> {
     @Override
     public ModelView process(UserManager userManager, HttpServletRequest request, HttpServletResponse response) {
-        return new ModelView("/user/loginform");
+        return new ModelView("forward","/user/loginform");
     }
 
 }

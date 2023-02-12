@@ -14,6 +14,6 @@ public class LogoutController implements Controller<UserManager> {
         HttpSession session = request.getSession();
         session.removeAttribute("authUser");
         session.invalidate();
-        return new ModelView("/main/index");
+        return new ModelView("forward","/main/index");
     }
 }

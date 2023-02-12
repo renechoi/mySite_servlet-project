@@ -42,3 +42,7 @@ CREATE SEQUENCE SEQ_BOARD_NO
 
 SELECT *
 FROm USERS
+
+
+alter table board
+    add(file_data blob);

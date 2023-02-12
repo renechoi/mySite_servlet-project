@@ -21,7 +21,7 @@ public class IdCheckController implements Controller<UserManager> {
             throw new RuntimeException(e);
         }
 
-        return new ModelView("/user/idcheck");
+        return new ModelView("forward","/user/idcheck");
     }
 
 }

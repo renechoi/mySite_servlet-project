@@ -16,6 +16,6 @@ public class BoardDeleteController implements Controller<BoardManager> {
         BoardVo boardVo = new BoardVo(Integer.parseInt(request.getParameter("no")));
         DaoResult daoResult = boardManager.delete(boardVo);
 
-        return new ModelView("/board/list");
+        return new ModelView("forward","/board/list");
     }
 }

@@ -21,6 +21,6 @@ public class JoinController implements Controller<UserManager> {
 
         DaoResult daoResult = userManager.register(userVo);
 
-        return new ModelView("/user/joinsuccess");
+        return new ModelView("forward", "/user/joinsuccess");
     }
 }

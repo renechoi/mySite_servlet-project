@@ -29,6 +29,6 @@ public class UserModifyController implements Controller<UserManager> {
 
         authUser.setName(userVo.getName());
 
-        return new ModelView("/main/index");
+        return new ModelView("forward","/main/index");
     }
 }

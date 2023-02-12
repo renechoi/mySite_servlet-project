@@ -16,7 +16,7 @@
 		
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="/board">
+				<form class="board-form" method="post" action="/board" enctype="multipart/form-data">
 					<input type ="hidden" name = "a" value="write">
 					<table class="tbl-ex">
 						<tr>
@@ -33,11 +33,16 @@
 							</td>
 						</tr>
 					</table>
+
+					<a> 파일 <input type="file" name="fileName"> </a><br>
+
 					<div class="bottom">
 						<a href="/board">취소</a>
 						<input type="submit" value="등록">
 					</div>
-				</form>				
+				</form>
+
+
 			</div>
 		</div>
 

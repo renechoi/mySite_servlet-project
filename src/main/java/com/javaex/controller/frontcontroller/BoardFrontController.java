@@ -9,6 +9,7 @@ import com.javaex.util.WebUtil;
 import com.javaex.view.MySiteView;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 50
+)
 @WebServlet(name = "boardFrontControllerServlet", urlPatterns = "/board/*")
 public class BoardFrontController extends HttpServlet {
 
@@ -56,7 +60,7 @@ public class BoardFrontController extends HttpServlet {
     }
 
     private static void renderView(HttpServletRequest request, HttpServletResponse response, ModelView userModelView) throws ServletException, IOException {
-        MySiteView.of(userModelView.getViewName())
+        MySiteView.of(userModelView.getViewTypeAndName())
                 .render(userModelView.getModel(), request, response);
     }
 

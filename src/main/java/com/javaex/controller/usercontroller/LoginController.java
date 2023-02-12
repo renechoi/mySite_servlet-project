@@ -21,19 +21,18 @@ public class LoginController implements Controller<UserManager> {
 //        handleNotFound(response, userVo);
 
         if (userVo == null) {
-            return new ModelView("/user/loginform");
+            return new ModelView("forward","/user/loginform");
         }
-
 
         HttpSession session = request.getSession(true);
         session.setAttribute("authUser", userVo);
 
-        return new ModelView("/main/index");
+        return new ModelView("forward","/main/index");
     }
 
     private static void handleNotFound(HttpServletResponse response, UserVo userVo) {
         if (userVo == null) {
-            new ModelView("/user/loginform");
+            new ModelView("redirect","/user?a=loginform");
         }
     }
 

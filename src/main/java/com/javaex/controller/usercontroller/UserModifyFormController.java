@@ -21,6 +21,6 @@ public class UserModifyFormController implements Controller<UserManager> {
 
         request.setAttribute("userVo", daoResult.getResultValue().get("userVo"));
 
-        return new ModelView("main/modifyform");
+        return new ModelView("forward","main/modifyform");
     }
 }

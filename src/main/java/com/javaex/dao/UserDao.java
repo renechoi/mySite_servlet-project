@@ -3,6 +3,7 @@ package com.javaex.dao;
 import com.javaex.jdbc.JdbcTemplate;
 import com.javaex.vo.UserVo;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,7 +28,7 @@ public class UserDao implements Dao<UserVo> {
     }
 
     @Override
-    public DaoResult insert(UserVo userVo) throws SQLException {
+    public DaoResult insert(UserVo userVo) throws SQLException, IOException {
         int result = JDBC_TEMPLATE.executeInsert(SqlQueries.INSERT.query, preparedStatement -> {
             preparedStatement.setString(1, userVo.getName());
             preparedStatement.setString(2, userVo.getEmail());
@@ -39,15 +40,15 @@ public class UserDao implements Dao<UserVo> {
     }
 
     @Override
-    public DaoResult readBy(String condition, UserVo userVo) throws SQLException {
-        if (condition.equals("userNumber")) {
+    public DaoResult readBy(ReadCondition condition, UserVo userVo) throws SQLException, IOException {
+        if (condition.getSearchCondition().equals("userNumber")) {
             return readByUserNumber(userVo);
         }
         return readByEmailAndPassword(userVo);
     }
 
 
-    private DaoResult readByUserNumber(UserVo userVo) throws SQLException {
+    private DaoResult readByUserNumber(UserVo userVo) throws SQLException, IOException {
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_USER_NO.query, preparedStatement -> {
             preparedStatement.setInt(1, userVo.getNo());
         });
@@ -63,7 +64,7 @@ public class UserDao implements Dao<UserVo> {
         return daoResult;
     }
 
-    private DaoResult readByEmailAndPassword(UserVo userVo) throws SQLException {
+    private DaoResult readByEmailAndPassword(UserVo userVo) throws SQLException, IOException {
 
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_USER_EMAIL_AND_PASSWORD.query, preparedStatement -> {
             preparedStatement.setString(1, userVo.getEmail());
@@ -85,7 +86,7 @@ public class UserDao implements Dao<UserVo> {
     }
 
     @Override
-    public DaoResult update(UserVo userVo) throws SQLException {
+    public DaoResult update(UserVo userVo) throws SQLException, IOException {
         if (!isPasswordFound(userVo)) {
             int result = JDBC_TEMPLATE.executeUpdate(SqlQueries.UPDATE_WITHOUT_PASSWORD.query, preparedStatement -> {
                 preparedStatement.setString(1, userVo.getName());
@@ -112,12 +113,12 @@ public class UserDao implements Dao<UserVo> {
     }
 
 
-    public DaoResult idCheck(String email) throws SQLException {
+    public DaoResult idCheck(String email) throws SQLException, IOException {
         String result = getCountByEmail(email) == 1 ? "true" : "false";
     return new DaoResult(result);
     }
 
-    private int getCountByEmail(String email) throws SQLException {
+    private int getCountByEmail(String email) throws SQLException, IOException {
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.GET_COUNT_BY_EMAIL.query, preparedStatement -> {
             preparedStatement.setString(1, email);
         });

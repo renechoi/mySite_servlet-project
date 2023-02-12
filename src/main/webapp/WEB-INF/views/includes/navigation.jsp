@@ -4,6 +4,6 @@
 			<ul>
 				<li><a href="/">홈</a></li>
 				<li><a href="/guestbook?a=list">방명록</a></li>
-				<li><a href="/board?a=list">게시판</a></li>
+				<li><a href="/board?a=list&page=1">게시판</a></li>
 			</ul>
 		</div> <!-- /navigation -->

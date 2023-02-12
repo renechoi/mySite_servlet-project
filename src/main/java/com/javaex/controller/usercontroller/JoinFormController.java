@@ -10,6 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 public class JoinFormController implements Controller<UserManager> {
     @Override
     public ModelView process(UserManager userManager, HttpServletRequest request, HttpServletResponse response) {
-        return new ModelView("/user/joinform");
+        return new ModelView("forward","/user/joinform");
     }
 }
