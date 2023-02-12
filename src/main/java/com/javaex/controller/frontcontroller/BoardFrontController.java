@@ -3,9 +3,7 @@ package com.javaex.controller.frontcontroller;
 import com.javaex.controller.Controller;
 import com.javaex.controller.ModelView;
 import com.javaex.controller.boardcontroller.*;
-import com.javaex.controller.guestbookcontroller.GuestbookMainController;
 import com.javaex.manager.BoardManager;
-import com.javaex.util.WebUtil;
 import com.javaex.view.MySiteView;
 
 import javax.servlet.ServletException;
@@ -38,25 +36,22 @@ public class BoardFrontController extends HttpServlet {
         controllerMap.put("write", new BoardWriteController());
         controllerMap.put("delete", new BoardDeleteController());
         controllerMap.put("download", new BoardFileDownloadController());
-
+        controllerMap.put("search", new BoardSearchController());
     }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String requestURI = request.getParameter("a");
-        System.out.println("requestURI = " + requestURI);
         Controller<BoardManager> boardController = controllerMap.get(requestURI);
         response.setContentType("text/html; charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         if (boardController == null) {
             response.sendRedirect("");
             return;
         }
-
         BoardManager boardManager = BoardManager.getInstance();
-
         ModelView boardModelView = boardController.process(boardManager, request, response);
-
         renderView(request, response, boardModelView);
     }
 

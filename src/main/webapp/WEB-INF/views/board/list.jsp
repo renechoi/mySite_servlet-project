@@ -17,22 +17,21 @@
 
     <div id="content">
         <div id="board">
-            <form id="search_form" action="" method="post">
-
+            <form id="search_form" action="/board?a=search" method="post">
                 <div class="search-type">
                     <label for="search-type" hidden>검색 유형</label>
                     <select class="form-control" id="search-type" name="searchType">
-                        <option>title</option>
-                        <option>content</option>
-                        <option>memberId</option>
-                        <option>memberName</option>
-                        <option>hashtag</option>
+                        <option value="name">작성자</option>
+                        <option value="reg_date">작성일시</option>
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                        <option value="file_name">파일이름</option>
                     </select>
                 </div>
                 <div class="search-value">
 
                 <label for="search-value" hidden>검색어</label>
-                <input placeholder="검색어..." type="text" id="kwd" name="kwd" value="">
+                <input placeholder="검색어..." type="text" id="kwd" name="searchValue" value="">
                 <input type="submit" value="찾기">
                 </div>
 

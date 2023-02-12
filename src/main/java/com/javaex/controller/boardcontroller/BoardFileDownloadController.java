@@ -55,8 +55,6 @@ public class BoardFileDownloadController implements Controller<BoardManager> {
     private static FileVo getFileVo(BoardManager boardManager, HttpServletRequest request) {
         BoardVo boardVo = new BoardVo(Integer.parseInt(request.getParameter("no")));
         DaoResult daoResult = boardManager.readBy(new ReadCondition("each", 0), boardVo);
-        BoardVo boardVo1 = (BoardVo) daoResult.getResultValue().get("boardVo");
-        FileVo file = boardVo1.getFile();
-        return file;
+        return ((BoardVo) daoResult.getResultValue().get("boardVo")).getFile();
     }
 }
