@@ -4,6 +4,7 @@ import com.javaex.controller.Controller;
 import com.javaex.controller.ModelView;
 import com.javaex.manager.BoardManager;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.FileVo;
 import com.javaex.vo.UserVo;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -35,9 +37,10 @@ public class BoardWriteController implements Controller<BoardManager> {
         return authUser;
     }
 
-    private static Part getFile(HttpServletRequest request) {
+    private static FileVo getFile(HttpServletRequest request) {
         try {
-           return request.getPart("fileName");
+            Part file = request.getPart("fileName");
+            return new FileVo(file.getSubmittedFileName(), file.getSize(), file.getInputStream());
         } catch (IOException | ServletException e) {
             System.out.println("e.getMessage() = " + e.getMessage());
             throw new RuntimeException(e);

@@ -3,11 +3,16 @@ package com.javaex.dao;
 import com.javaex.Pagination;
 import com.javaex.jdbc.JdbcTemplate;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.FileVo;
 
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BoardDao implements Dao<BoardVo> {
@@ -16,9 +21,9 @@ public class BoardDao implements Dao<BoardVo> {
 
     private enum SqlQueries {
         INSERT("insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?)"),
-        INSERT_WITH_FILE("insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?, ?)"),
+        INSERT_WITH_FILE("insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?, ?, ?)"),
         UPDATE("update board set title = ?, content = ? where no = ?"),
-        READ_BY_EACH("select b.no, b.title, b.content, b.hit, b.reg_date, b.user_no, u.name from board b, users u where b.user_no = u.no and b.no = ?"),
+        READ_BY_EACH("select b.no, b.title, b.content, b.hit, b.reg_date, b.user_no, u.name,  b.file_data, b.file_name from board b, users u where b.user_no = u.no and b.no = ?"),
         READ_BY_PAGE("""
                 SELECT article_inline.*
                 FROM (SELECT ROWNUM rnum,
@@ -28,6 +33,8 @@ public class BoardDao implements Dao<BoardVo> {
                              board.hit,
                              board.reg_date,
                              board.user_no,
+                             board.file_data,
+                             board.file_name,
                              users.name
                       FROM BOARD board,
                            USERS users
@@ -72,9 +79,9 @@ public class BoardDao implements Dao<BoardVo> {
             preparedStatement.setString(1, boardVo.getTitle());
             preparedStatement.setString(2, boardVo.getContent());
             preparedStatement.setInt(3, boardVo.getUserNo());
-            preparedStatement.setBlob(4, boardVo.getFile().getInputStream());
+            preparedStatement.setBlob(4, boardVo.getFile().getFileContent());
+            preparedStatement.setString(5, boardVo.getFile().getFileName());
         });
-//        JDBC_TEMPLATE.close();
         return new DaoResult(result);
     }
 
@@ -122,6 +129,7 @@ public class BoardDao implements Dao<BoardVo> {
         });
 
         while (resultSet.next()) {
+
             BoardVo vo = new BoardVo(
                     resultSet.getInt("no"),
                     resultSet.getString("title"),
@@ -130,7 +138,7 @@ public class BoardDao implements Dao<BoardVo> {
                     resultSet.getString("reg_date"),
                     resultSet.getInt("user_no"),
                     resultSet.getString("name")
-                    );
+            );
 
             boardVos.add(vo);
         }
@@ -147,6 +155,15 @@ public class BoardDao implements Dao<BoardVo> {
                 preparedStatement -> preparedStatement.setInt(1, no));
 
         boolean resultExist = resultSet.next();
+
+        InputStream fileData = resultSet.getBinaryStream("file_data");
+        String fileName = resultSet.getString("file_name");
+
+        FileVo fileVo = null;
+        if (fileName !=null && fileData != null){
+            fileVo = new FileVo(fileName, 0L, fileData);
+        }
+
         DaoResult daoResult = new DaoResult("success");
         daoResult.setResult("boardVo", new BoardVo(
                 no,
@@ -155,7 +172,9 @@ public class BoardDao implements Dao<BoardVo> {
                 resultSet.getInt("hit"),
                 resultSet.getString("reg_date"),
                 resultSet.getInt("user_no"),
-                resultSet.getString("name")));
+                resultSet.getString("name"),
+                fileVo)
+        );
 
         return daoResult;
     }

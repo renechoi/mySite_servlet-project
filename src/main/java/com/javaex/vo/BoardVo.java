@@ -11,7 +11,7 @@ public class BoardVo {
 	private String regDate;
 	private int userNo;
 	private String userName;
-	private Part file;
+	private FileVo file;
 
 	public BoardVo() {
 	}
@@ -24,7 +24,7 @@ public class BoardVo {
 		this(no, title, content, 0, "none", 0, "none");
 	}
 
-	public BoardVo(String title, String content, int userNo, Part file) {
+	public BoardVo(String title, String content, int userNo, FileVo file) {
 		this(0, title, content, 0, "none", userNo, "none", file);
 	}
 
@@ -38,7 +38,7 @@ public class BoardVo {
 		this.content = content;
 	}
 
-	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo, String userName, Part file) {
+	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo, String userName, FileVo file) {
 		this.no = no;
 		this.title = title;
 		this.content = content;
@@ -105,14 +105,21 @@ public class BoardVo {
 		this.userName = userName;
 	}
 
-	public Part getFile() {
+	public FileVo getFile() {
 		return file;
 	}
 
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", content=" + content + ", hit=" + hit + ", regDate="
-				+ regDate + ", userNo=" + userNo + ", userName=" + userName + "]";
+		return "BoardVo{" +
+				"no=" + no +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", hit=" + hit +
+				", regDate='" + regDate + '\'' +
+				", userNo=" + userNo +
+				", userName='" + userName + '\'' +
+				", file=" + file +
+				'}';
 	}
-
 }

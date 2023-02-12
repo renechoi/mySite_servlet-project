@@ -18,8 +18,27 @@
     <div id="content">
         <div id="board">
             <form id="search_form" action="" method="post">
-                <input type="text" id="kwd" name="kwd" value="">
+
+                <div class="search-type">
+                    <label for="search-type" hidden>검색 유형</label>
+                    <select class="form-control" id="search-type" name="searchType">
+                        <option>title</option>
+                        <option>content</option>
+                        <option>memberId</option>
+                        <option>memberName</option>
+                        <option>hashtag</option>
+                    </select>
+                </div>
+                <div class="search-value">
+
+                <label for="search-value" hidden>검색어</label>
+                <input placeholder="검색어..." type="text" id="kwd" name="kwd" value="">
                 <input type="submit" value="찾기">
+                </div>
+
+
+
+
             </form>
             <table class="tbl-ex">
                 <tr>

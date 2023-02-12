@@ -46,3 +46,8 @@ FROm USERS
 
 alter table board
     add(file_data blob);
+
+
+
+alter table board
+    add(file_name varchar2(200));

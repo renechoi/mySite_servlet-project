@@ -35,6 +35,13 @@
 						</td>
 					</tr>
 				</table>
+
+				<c:if test="${file != null}">
+					<form method="post" action="/board?a=download&no=${boardVo.no}">
+						<input type="submit" value="다운로드">
+					</form>
+				</c:if>
+
 				<div class="bottom">
 					<a href="/board?a=list">글목록</a>
 					
@@ -44,6 +51,11 @@
 				</div>
 			</div>
 		</div>
+
+
+
+
+
 
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		

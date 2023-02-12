@@ -37,6 +37,7 @@ public class BoardFrontController extends HttpServlet {
         controllerMap.put("modify", new BoardModifyController());
         controllerMap.put("write", new BoardWriteController());
         controllerMap.put("delete", new BoardDeleteController());
+        controllerMap.put("download", new BoardFileDownloadController());
 
     }
 
