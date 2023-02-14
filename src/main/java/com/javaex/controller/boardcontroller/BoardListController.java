@@ -1,6 +1,6 @@
 package com.javaex.controller.boardcontroller;
 
-import com.javaex.Pagination;
+import com.javaex.vo.Pagination;
 import com.javaex.controller.Controller;
 import com.javaex.controller.ModelView;
 import com.javaex.dao.DaoResult;

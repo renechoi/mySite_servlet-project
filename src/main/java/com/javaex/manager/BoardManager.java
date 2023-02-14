@@ -52,4 +52,13 @@ public class BoardManager implements Manager {
             return new DaoResult("fail");
         }
     }
+
+    public DaoResult updateHit(BoardVo boardVo) {
+        try {
+            return BOARD_DAO.updateHit(boardVo);
+        } catch (RuntimeException | SQLException | IOException e) {
+            System.out.println("e.getMessage() = " + e.getMessage());
+            return new DaoResult("fail");
+        }
+    }
 }

@@ -1,18 +1,15 @@
 package com.javaex.dao;
 
-import com.javaex.Pagination;
+import com.javaex.vo.Pagination;
 import com.javaex.jdbc.JdbcTemplate;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.FileVo;
 
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BoardDao implements Dao<BoardVo> {
@@ -23,6 +20,11 @@ public class BoardDao implements Dao<BoardVo> {
         INSERT("insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?)"),
         INSERT_WITH_FILE("insert into board values (seq_board_no.nextval, ?, ?, 0, sysdate, ?, ?, ?)"),
         UPDATE("update board set title = ?, content = ? where no = ?"),
+        UPDATE_HIT("""
+                UPDATE board
+                SET hit = board.hit +1
+                WHERE no = ?
+                """),
         READ_BY_EACH("select b.no, b.title, b.content, b.hit, b.reg_date, b.user_no, u.name,  b.file_data, b.file_name from board b, users u where b.user_no = u.no and b.no = ?"),
         READ_BY_PAGE("""
                 SELECT article_inline.*
@@ -182,15 +184,13 @@ public class BoardDao implements Dao<BoardVo> {
     }
 
     private DaoResult readByEach(BoardVo boardVo) throws SQLException, IOException {
-        int no = boardVo.getNo();
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.READ_BY_EACH.query,
-                preparedStatement -> preparedStatement.setInt(1, no));
+                preparedStatement -> preparedStatement.setInt(1, boardVo.getNo()));
 
-        boolean resultExist = resultSet.next();
+        resultSet.next();
 
         InputStream fileData = resultSet.getBinaryStream("file_data");
         String fileName = resultSet.getString("file_name");
-
         FileVo fileVo = null;
         if (fileName != null && fileData != null) {
             fileVo = new FileVo(fileName, 0L, fileData);
@@ -198,7 +198,7 @@ public class BoardDao implements Dao<BoardVo> {
 
         DaoResult daoResult = new DaoResult("success");
         daoResult.setResult("boardVo", new BoardVo(
-                no,
+                boardVo.getNo(),
                 resultSet.getString("title"),
                 resultSet.getString("content"),
                 resultSet.getInt("hit"),
@@ -231,6 +231,14 @@ public class BoardDao implements Dao<BoardVo> {
     }
 
 
+    public DaoResult updateHit(BoardVo boardVo) throws SQLException, IOException {
+        int result = JDBC_TEMPLATE.executeUpdate(SqlQueries.UPDATE_HIT.query, preparedStatement -> {
+            preparedStatement.setInt(1, boardVo.getNo());
+        });
+
+        return new DaoResult(result);
+    }
+
     private int getArticleCount() throws SQLException {
         ResultSet resultSet = JDBC_TEMPLATE.executeQuery(SqlQueries.GET_COUNT.query);
         int count = 0;
@@ -246,5 +254,4 @@ public class BoardDao implements Dao<BoardVo> {
         }
         return String.format("board.%s", condition.getSearchCondition());
     }
-
 }

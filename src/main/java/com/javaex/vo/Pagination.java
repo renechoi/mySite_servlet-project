@@ -1,4 +1,4 @@
-package com.javaex;
+package com.javaex.vo;
 
 public class Pagination {
     private int articleTotalCount;
