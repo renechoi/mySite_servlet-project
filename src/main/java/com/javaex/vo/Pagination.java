@@ -9,7 +9,6 @@ public class Pagination {
     private int articleEnd;
     private int currentPage;
 
-
     public Pagination(int pageLimit, int pageStart, int articleTotalCount) {
         this.articleTotalCount = articleTotalCount;
         this.articlePerPage = pageLimit;
@@ -43,36 +42,12 @@ public class Pagination {
         return articleTotalCount % pageLimit;
     }
 
-    public int getArticleTotalCount() {
-        return articleTotalCount;
-    }
-
-    public int getArticlePerPage() {
-        return articlePerPage;
-    }
-
-    public int getPageCount() {
-        return pageCount;
-    }
-
-    public int getLagePageArticleCount() {
-        return lagePageArticleCount;
-    }
-
     public int getArticleStart() {
         return articleStart;
     }
 
     public int getArticleEnd() {
         return articleEnd;
-    }
-
-    public int getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setArticleTotalCount(int articleTotalCount) {
-        this.articleTotalCount = articleTotalCount;
     }
 
     @Override

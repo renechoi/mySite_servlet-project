@@ -35,9 +35,6 @@ public class UserVo {
 		this.gender = gender;
 	}
 
-
-
-
 	public int getNo() {
 		return no;
 	}
@@ -72,10 +69,6 @@ public class UserVo {
 
 	public String getGender() {
 		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	@Override

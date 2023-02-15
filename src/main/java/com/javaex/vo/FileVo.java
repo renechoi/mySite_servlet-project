@@ -13,13 +13,8 @@ public class FileVo {
         this.fileContent = fileContent;
     }
 
-
     public String getFileName() {
         return fileName;
-    }
-
-    public Long getFileSize() {
-        return fileSize;
     }
 
     public InputStream getFileContent() {

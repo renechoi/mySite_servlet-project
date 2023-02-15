@@ -13,7 +13,6 @@ public class MySiteView {
     private String viewType;
     private String viewPath;
 
-
     public MySiteView(String viewPath) {
         this.viewPath = viewPath;
     }
@@ -37,7 +36,6 @@ public class MySiteView {
         String viewName = (String) viewTypeAndName.values().toArray()[0];
         return new MySiteView(viewType, viewName);
     }
-
 
     public void render(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         modelToRequestAttribute(model, request);
